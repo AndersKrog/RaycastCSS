@@ -2,15 +2,14 @@ import calculations from './calculations.js';
 
 export default class Ray{
 	constructor(rayAngle){
-		this.rayAngle = calculations.normalizeAngle(rayAngle);
+		//this.wallHitTile = 0;
+        this.rayAngle = calculations.normalizeAngle(rayAngle);
 		this.wallHitX = 0;
 		this.wallHitY = 0;
-		this.distance = 0;
 		this.wasHitVertical = false;
-		this.wallHitTile = 0;
+
 		this.isRayFacingDown = this.rayAngle > 0 && this.rayAngle < Math.PI;
 		this.isRayFacingUp = !this.isRayFacingDown;
-		this.wallOffset;
 		
 		this.isRayFacingRight = this.rayAngle < 0.5*Math.PI || this.rayAngle > 1.5 * Math.PI;
 		this.isRayFacingLeft = !this.isRayFacingRight;
@@ -68,7 +67,7 @@ export default class Ray{
 		yintercept = player.y + (xintercept-player.x)*Math.tan(this.rayAngle)
 	
 		// calculate the increment xstep and ystep
-		xstep = this.TILE_SIZE;
+		xstep = map.TILE_SIZE;
 		xstep *= this.isRayFacingLeft ? -1 :1;
 		
 		ystep = map.TILE_SIZE * Math.tan(this.rayAngle);
