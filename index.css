@@ -1,0 +1,46 @@
+:root{
+	--line-0: 1px;
+	--line-1: 2px;
+	--line-2: 3px;
+	--line-3: 4px;
+	--line-4: 5px;
+	--line-5: 6px;
+	--line-6: 7px;
+	--line-7: 8px;
+	--line-8: 9px;	
+	--line-9: 0px;	
+
+    --width: 400px;
+    --height: 240px;
+
+}
+
+.window{
+	margin: auto;
+
+    background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(7,57,153,1) 7%, rgba(7,62,157,1) 16%, rgba(180,225,234,1) 50%, rgba(42,80,80,1) 50%);
+	width: var(--width);
+	height: var(--height); 
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+.line {
+
+	width: 10%;
+	outline: 0px;
+	outline-style: solid;
+	outline-color: black;
+}
+
+.l0{height: var(--line-0);}
+.l1{height: var(--line-1);}
+.l2{height: var(--line-2);}
+.l3{height: var(--line-3);}
+.l4{height: var(--line-4);}
+.l5{height: var(--line-5);}
+.l6{height: var(--line-6);}
+.l7{height: var(--line-7);}
+.l8{height: var(--line-8);}
+.l9{height: var(--line-9);}
