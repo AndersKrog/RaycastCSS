@@ -2,10 +2,10 @@ import Ray from './ray.js';
 
 export default class Render{
     constructor(height, width, numofrays){
-        this.WINDOW_WIDTH = width;
         this.WINDOW_HEIGHT = height;
+        this.WINDOW_WIDTH = width;
         
-        this.FOV_ANGLE = 60 * (Math.PI/180);
+        this.FOV_ANGLE = 45 * (Math.PI/180);
         this.NUM_RAYS = numofrays;
         
         this.DIST_PROJ_PLANE = (this.WINDOW_WIDTH/2)/Math.tan(this.FOV_ANGLE/2);
@@ -40,13 +40,17 @@ export default class Render{
             // projected wall height
             let wallStripHeight = (map.TILE_SIZE/ correctRayDistance)*this.DIST_PROJ_PLANE;
         
-            let value = wallStripHeight > this.WINDOW_HEIGHT? this.WINDOW_HEIGHT: wallStripHeight;
+            // TODO: not sure why this doesn't work
+            //let value = wallStripHeight > this.WINDOW_HEIGHT? this.WINDOW_HEIGHT: wallStripHeight;
+            let value = wallStripHeight > 480? 480: wallStripHeight;
 
             // COLOR 
-            let colordistance = 250/wallStripHeight;
-            let red = Math.floor(100/colordistance);
+            let colordistance = (250/wallStripHeight) < 1? 1: 250/wallStripHeight;
+            let red = Math.floor(100/colordistance) -20;
             let green = Math.floor(256/colordistance/2);
-            let blue = Math.floor(100/colordistance);
+            let blue = Math.floor(100/colordistance) -20;
+
+
 
             let colorvalue1 = `--line-${i}-color`
             let colorvalue2 = `rgb(${red},${green},${blue})`; 
