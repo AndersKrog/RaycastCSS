@@ -2,12 +2,15 @@ import {InputHandler} from './inputhandler.js'
 import Player from './player.js'
 import Map from './map.js'
 import Render from './render.js'
-import Screen from './screen.js'
+import hud from './hud.js'
 
-const lines = 200;
+const lines = 400;
+const height = 400;
+const width = 400;
+
 const map = new Map(lines);
 const player = new Player(map);
-const render = new Render(400,240,lines);
+const render = new Render(height,width,lines);
 
 async function setup()
 {
@@ -15,18 +18,17 @@ async function setup()
     const inputhandler =  new InputHandler(player);
 
     // create html and css elements for rendering screen
-    const screen = new Screen(lines);
+    hud.Screen(lines);
+    hud.HUDmap(map);
 
     loop();
 }
 
 function loop(){
     player.update(map);
+
 	render.render(player, map);
     requestAnimationFrame(loop);
 }
 
-
-
-window.addEventListener('load', setup);
-
+setup();

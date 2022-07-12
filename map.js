@@ -1,6 +1,6 @@
 export default class Map {
     constructor() {
-        this.TILE_SIZE = 64;
+        this.TILE_SIZE = 16;
         this.grid = [
             [1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1],
             [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -21,7 +21,12 @@ export default class Map {
         this.MAP_WIDTH = this.MAP_NUM_COLS * this.TILE_SIZE;
         this.MAP_HEIGHT = this.MAP_NUM_ROWS * this.TILE_SIZE;
         // console.log("ROWS" + this.MAP_NUM_ROWS + " COLS " + this.MAP_NUM_COLS)
-
+        this.initial();
+    }
+    initial(){
+        let root = document.documentElement;
+        root.style.setProperty('--mapwidth',this.MAP_NUM_COLS);
+        root.style.setProperty('--mapheight',this.MAP_NUM_ROWS);
     }
 	hasWallAt(x,y){
 		if (x < 0 || x > this.MAP_WIDTH || y < 0 || y > this.MAP_HEIGHT){

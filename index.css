@@ -2,46 +2,72 @@ body{
     background-color: darkgray;
 }
 
-:root{
-	--line-0: 1px;
-	--line-1: 2px;
-	--line-2: 3px;
-	--line-3: 4px;
-	--line-4: 5px;
-	--line-5: 6px;
-	--line-6: 7px;
-	--line-7: 8px;
-	--line-8: 9px;	
-	--line-9: 0px;	
+html{
+    --width: 100;
+    --height: 60;
+    --mapheight: 1;
+    --mapwidth: 1;
 
-    --width: 800px;
-    --height: 480px;
-
+    --skycolor : 7,57,153;
 }
 
 .window{
 	margin: auto;
+    background: linear-gradient(180deg,
+        rgba(2,0,36,1) 0%,
+        rgb(var(--skycolor)) 7%,
+        rgba(180,225,234,1) 50%,
+        rgba(42,80,80,1) 50%);
 
-    background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(7,57,153,1) 7%, rgba(7,62,157,1) 16%, rgba(180,225,234,1) 50%, rgba(42,80,80,1) 50%);
-	width: var(--width);
-	height: var(--height); 
+    width: calc(var(--width) * 1px);
+	height: calc(var(--height) * 1px); 
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+.map{
+    width: calc(var(--width) * .25px);
+	height: calc(var(--height) * .25px); 
+    background-color: rgb(255, 0, 0);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.mapitem {
+    background-color: rgb(255, 255, 255);
+    width: calc(var(--width)/(var(--mapwidth)) * .25px);
+	height: calc(var(--height)/(var(--mapheight)) * .25px); 
+}
+
+.red{
+    background-color: rgb(255, 0, 0);
 
 }
+
+.wall{
+    background-color: rgb(0, 0, 0);
+}
+
 .line {
+	height: calc(var(--height) * 1px); 
+    
+    background-color: rgb(var(--color));
+    width: 1px;
+    /*background-repeat: no-repeat;*/
+    background-position: calc(var(--offset) * calc(var(--height)/16)* 1px),0px;
 
-	width: 1%;
+    background-size: calc(var(--height) *1px), 0px;
+
+    filter: brightness(calc(var(--height)/250));
+
+    /* not right*/
+
+    background-origin: content-box;
+
+    background-image: url("wall.png");
+  
+    
+ 
 }
-
-.l0{height: var(--line-0);}
-.l1{height: var(--line-1);}
-.l2{height: var(--line-2);}
-.l3{height: var(--line-3);}
-.l4{height: var(--line-4);}
-.l5{height: var(--line-5);}
-.l6{height: var(--line-6);}
-.l7{height: var(--line-7);}
-.l8{height: var(--line-8);}
-.l9{height: var(--line-9);}

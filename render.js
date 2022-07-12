@@ -5,14 +5,39 @@ export default class Render{
         this.WINDOW_HEIGHT = height;
         this.WINDOW_WIDTH = width;
         
-        this.FOV_ANGLE = 45 * (Math.PI/180);
+        this.FOV_ANGLE = 90 * (Math.PI/180);
         this.NUM_RAYS = numofrays;
         
         this.DIST_PROJ_PLANE = (this.WINDOW_WIDTH/2)/Math.tan(this.FOV_ANGLE/2);
+
+        this.initial(height,width);
+    }
+    initial(height,width){
+        let root = document.documentElement;
+    
+        root.style.setProperty('--height',height);
+        root.style.setProperty('--width',width);
+
     }
     render(player,map){
-        this.castAllRays(player, map);    
+        this.castAllRays(player, map);
+        this.UpdateHudMap(player,map)    
+        
     }
+    UpdateHudMap(player,map){
+        let x = Math.floor(player.x/map.TILE_SIZE);
+        let y = Math.floor(player.y/map.TILE_SIZE);
+
+        //console.log("x : " + x + "y: " + y );
+
+        let itemnr = y * map.MAP_NUM_ROWS + x;
+
+        let m = document.querySelector(`[data-index="${itemnr}"]`);
+
+        m.className = 'mapitem red';
+    }
+    
+
     castAllRays(player, map){
         let rays = [];
 
@@ -29,10 +54,11 @@ export default class Render{
     render3DProjectedWalls(player, rays,map){
         let root = document.documentElement;
 
-        // loop every ray in the array of rays
-        for (let i = 0; i < this.NUM_RAYS;i++){
+        let domlines = document.getElementsByClassName('line');
+        domlines = [...document.querySelectorAll('.line')];
+
+        domlines.forEach((line,i) => {
             let ray = rays[i];
-            
             // correct fisheye : vandrette afstand
             let correctRayDistance = ray.distance * Math.cos(ray.rayAngle-player.rotationAngle);
             
@@ -40,9 +66,7 @@ export default class Render{
             // projected wall height
             let wallStripHeight = (map.TILE_SIZE/ correctRayDistance)*this.DIST_PROJ_PLANE;
         
-            // TODO: not sure why this doesn't work
-            //let value = wallStripHeight > this.WINDOW_HEIGHT? this.WINDOW_HEIGHT: wallStripHeight;
-            let value = wallStripHeight > 480? 480: wallStripHeight;
+            let height = wallStripHeight > this.WINDOW_HEIGHT? this.WINDOW_HEIGHT: wallStripHeight;
 
             // COLOR 
             let colordistance = (250/wallStripHeight) < 1? 1: 250/wallStripHeight;
@@ -50,16 +74,13 @@ export default class Render{
             let green = Math.floor(256/colordistance/2);
             let blue = Math.floor(100/colordistance) -20;
 
+            line.style.setProperty('--height',height)
+            line.style.setProperty('--color',[red, green, blue])
 
+            let offset = ray.wasHitVertical? Math.ceil(ray.wallHitY%map.TILE_SIZE): Math.ceil(ray.wallHitX%map.TILE_SIZE);	
+        
+            line.style.setProperty('--offset', offset)
 
-            let colorvalue1 = `--line-${i}-color`
-            let colorvalue2 = `rgb(${red},${green},${blue})`; 
-            root.style.setProperty(colorvalue1,colorvalue2);
-
-            // DRAW LINE
-            let heightvalue1 = `--line-${i}`
-            let heightvalue2 = `${value}px`; 
-            root.style.setProperty(heightvalue1,heightvalue2);
-        }
+        });
     }
 }
